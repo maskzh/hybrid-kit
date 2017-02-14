@@ -1,5 +1,5 @@
 {
-  "name": "hybrid",
+  "name": "hybrid-kit",
   "version": "0.0.1",
   "description": "hybrid common kit",
   "main": "dist/hybrid.js",
