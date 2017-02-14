@@ -195,7 +195,7 @@ function requestHybrid(options) {
   if(!options.action) throw new Error('action must set!')
 
   // 获取 Hybrid 信息
-  const { schema } = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */])()
+  const { schema = 'hybrid' } = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */])()
 
   // 生成唯一执行函数，执行后销毁
   const cbName = `${schema}_${Date.now()}`
@@ -210,9 +210,11 @@ function requestHybrid(options) {
     }
   }
 
-  console.log(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */])(schema, options))
+  const url = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */])(schema, options)
 
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__["a" /* default */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */])(schema, options))
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__["a" /* default */])(url)
+
+  return url
 }
 
 

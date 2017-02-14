@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<title>首页</title>
+<link rel="stylesheet" href="./style.css">
+<script src="../dist/hybrid.js"></script>
+</head>
+<body>
+<h3>获取登录用户信息</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'getUserInfo',
+  callback: function(res) {
+    if (res.result) {
+      var user = res.data
+    }
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="getUserInfo()">获取登录用户信息</a></div>
+<div class="container" id="getUserInfo"></div>
+
+<h3>获取网络状态</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'getNetwork',
+  callback: function(res) {
+    // 返回网络类型 2g，3g，4g，wifi, none
+    if (res.result) {
+      var networkType = res.data.networkType
+    }
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="getNetwork()">获取网络状态</a></div>
+<div class="container" id="getNetwork"></div>
+
+<h3>获取地理位置</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'getLocation',
+  callback: function(res) {
+    if (res.result) {
+      var lat = res.data.lat // 纬度
+      var lon = res.data.lon // 经度
+    }
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="getLocation()">获取地理位置</a></div>
+<div class="container" id="getLocation"></div>
+
+<link rel="stylesheet" href="./highlight/github-gist.css">
+<script src="./highlight/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>
+  function getNetwork() {
+    console.log(requestHybrid({
+      action: 'getUserInfo',
+      callback: function(res) {
+        if (res.result) {
+          document.getElementById('getUserInfo').innerHTML = JSON.stringify(res.data)
+        }
+      }
+    }))
+  }
+  function getNetwork() {
+    console.log(requestHybrid({
+      action: 'getNetwork',
+      callback: function(res) {
+        // 返回网络类型 2g，3g，4g，wifi, none
+        if (res.result) {
+          document.getElementById('getNetwork').innerHTML = res.data.networkType
+        }
+      }
+    }))
+  }
+  function getLocation() {
+    console.log(requestHybrid({
+      action: 'getLocation',
+      callback: function(res) {
+        if (res.result) {
+          document.getElementById('getLocation').innerHTML = '纬度：' + res.data.lat + ', 经度：' + res.data.lon
+        }
+      }
+    }))
+  }
+</script>
+</body>
+</html>

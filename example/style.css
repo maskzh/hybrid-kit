@@ -1,0 +1,19 @@
+html {
+  font-size: 14px;
+}
+code {
+  box-shadow: 0 0 2px 2px #eee;
+  border-radius: 5px;
+}
+.container {
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px #eee;
+  min-height: 50px;
+  margin-top: 30px;
+}
+.button {
+  padding: 5px 8px;
+  border: 1px solid #d9d9d9;
+  background-color: #eee;
+  border-radius: 5px;
+}

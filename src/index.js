@@ -8,7 +8,7 @@ export function requestHybrid(options) {
   if(!options.action) throw new Error('action must set!')
 
   // 获取 Hybrid 信息
-  const { schema } = getHybridInfo()
+  const { schema = 'hybrid' } = getHybridInfo()
 
   // 生成唯一执行函数，执行后销毁
   const cbName = `${schema}_${Date.now()}`
@@ -23,7 +23,9 @@ export function requestHybrid(options) {
     }
   }
 
-  console.log(getHybridUrl(schema, options))
+  const url = getHybridUrl(schema, options)
 
-  bridgePostMsg(getHybridUrl(schema, options))
+  bridgePostMsg(url)
+
+  return url
 }
