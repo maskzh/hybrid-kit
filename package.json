@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/maskzh/hybrid.git"
+    "url": "git+ssh://git@github.com/maskzh/hybrid-kit.git"
   },
   "keywords": [
     "hybrid",
@@ -19,9 +19,9 @@
   "author": "maskzh",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maskzh/hybrid/issues"
+    "url": "https://github.com/maskzh/hybrid-kit/issues"
   },
-  "homepage": "https://github.com/maskzh/hybrid#readme",
+  "homepage": "https://github.com/maskzh/hybrid-kit#readme",
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
