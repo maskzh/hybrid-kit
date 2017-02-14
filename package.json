@@ -4,7 +4,7 @@
   "description": "hybrid common kit",
   "main": "dist/hybrid.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack src/index.js dist/hybrid.min.js --output-library-target umd --optimize-minimize",
+    "build": "node_modules/.bin/webpack --module-bind 'js=babel-loader' src/index.js dist/hybrid.min.js --output-library-target umd --optimize-minimize",
     "dev": "node_modules/.bin/webpack src/index.js dist/hybrid.js --output-library-target umd --watch",
     "test": "node_modules/.bin/karma start test/karma.conf.js --single-run --no-auto-watch"
   },

@@ -73,11 +73,57 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getHybridUrl__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__ = __webpack_require__(1);
+/* harmony export (immutable) */ __webpack_exports__["requestHybrid"] = requestHybrid;
+
+
+
+
+window.Hybrid = window.Hybrid || {}
+
+exports.getHybridInfo = __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */]
+exports.getHybridUrl = __WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */]
+
+function requestHybrid(options) {
+  if(!options.action) throw new Error('action must set!')
+
+  // 获取 Hybrid 信息
+  const { schema = 'hybrid' } = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */])()
+
+  // 生成唯一执行函数，执行后销毁
+  const cbName = `${schema}_${Date.now()}`
+
+  // 处理有回调的情况
+  if (options.callback) {
+    const cb = options.callback
+    options.callback = cbName
+    window.Hybrid[cbName] = function(data) {
+      cb(data)
+      delete window.Hybrid[cbName]
+    }
+  }
+
+  const url = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */])(schema, options)
+
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__["a" /* default */])(url)
+
+  return url
+}
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -112,7 +158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -144,7 +190,7 @@ function getHybridInfo() {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -170,49 +216,6 @@ function getHybridUrl(schema, options) {
       ? JSON.stringify(options.params) : options.params
     url += `&params=${encodeURIComponent(paramStr)}`
   }
-
-  return url
-}
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getHybridUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__ = __webpack_require__(0);
-/* harmony export (immutable) */ __webpack_exports__["requestHybrid"] = requestHybrid;
-
-
-
-
-window.Hybrid = window.Hybrid || {}
-
-function requestHybrid(options) {
-  if(!options.action) throw new Error('action must set!')
-
-  // 获取 Hybrid 信息
-  const { schema = 'hybrid' } = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */])()
-
-  // 生成唯一执行函数，执行后销毁
-  const cbName = `${schema}_${Date.now()}`
-
-  // 处理有回调的情况
-  if (options.callback) {
-    const cb = options.callback
-    options.callback = cbName
-    window.Hybrid[cbName] = function(data) {
-      cb(data)
-      delete window.Hybrid[cbName]
-    }
-  }
-
-  const url = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */])(schema, options)
-
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__["a" /* default */])(url)
 
   return url
 }

@@ -4,6 +4,9 @@ import bridgePostMsg from './bridgePostMsg'
 
 window.Hybrid = window.Hybrid || {}
 
+exports.getHybridInfo = getHybridInfo
+exports.getHybridUrl = getHybridUrl
+
 export function requestHybrid(options) {
   if(!options.action) throw new Error('action must set!')
 
