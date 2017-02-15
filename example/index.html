@@ -11,6 +11,47 @@
 <script src="../dist/hybrid.js"></script>
 </head>
 <body>
+<h3>下拉刷新 <small>已注册在该页面</small></h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'registerRefresh',
+  // 下拉后执行的回调, 就全部刷新
+  callback: function(data) {
+    requestHybrid({ action: 'hideRefresh' })
+    location.reload();  // 前端直接刷新，或者发起请求更新
+  }
+})
+</code>
+</pre>
+
+<h3>跳转</h3>
+<h4>跳转到 web</h4>
+<pre>
+<code class="javascript">requestHybrid({
+ action: 'go', // action
+ params: {
+   to: location.origin + location.pathname + 'back.html', // 要前往的页面
+   type: 'web', // 新开 webview 跳转到前端页面
+   otherkey: '1', // 其他参数
+ }
+})
+</code>
+</pre>
+<div><a class="button" onclick="goToWeb()">跳转到 web</a></div>
+<h4>跳转到 Native</h4>
+<pre>
+<code class="javascript">requestHybrid({
+ action: 'go', // action
+ params: {
+   to: 'test', // 要前往的页面
+   type: 'native', // 新开 webview 跳转到前端页面
+   otherkey: '1', // 其他参数
+ }
+})
+</code>
+</pre>
+<div><a class="button" onclick="goToNative()">跳转到 Native</a></div>
+
 <h3>获取登录用户信息</h3>
 <pre>
 <code class="javascript">requestHybrid({
@@ -58,10 +99,94 @@
 <div><a class="button" onclick="getLocation()">获取地理位置</a></div>
 <div class="container" id="getLocation"></div>
 
+<h3>拍照或从手机相册中选图</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'chooseImage', // action
+  params: {
+    count: 1,                             // 默认 1
+    sizeType: ['original', 'compressed'], // 原图还是压缩图，默认二者都有,
+    sourceType: ['album', 'camera'],      // 相册还是相机，默认二者都有
+  },
+  callback: function(res) {
+    var localIds = res.data.localIds  // 返回选定照片的本地 ID 列表，localId 可以作为 img 标签的 src 属性显示图片
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="chooseImage()">拍照或从手机相册中选图</a></div>
+<div class="container" id="chooseImage"></div>
+
+<h3>预览图片</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'previewImage', // action
+  params: {
+    current: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 当前显示图片的 http 链接
+    urls: [
+      'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',
+      'http://img.jkbsimg.com/up/pic/2017/01/03/-KXs4x-SFy.png',
+      'http://img.jkbsimg.com/up/pic/2017/01/03/-rHkR-bkIv.jpg'
+    ],  // 需要预览的图片 http 链接列表
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="previewImage()">预览图片</a></div>
+
+<h3>分享</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'share', // action
+  params: {
+    // 上面两个参数用于内部分享，或者分享打点
+    type: 'product', // 分享类型
+    id: '1',        // 分享东西的 ID
+
+    title: '阿娇',   // 标题
+    pic: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 图片
+    desc: '呵呵呵呵',   // 描述
+    url: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',  // 分享的地址
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="share()">分享</a></div>
+
 <link rel="stylesheet" href="./highlight/github-gist.css">
 <script src="./highlight/highlight.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
+  (function registerRefresh() {
+    console.log(requestHybrid({
+      action: 'registerRefresh',
+      // 下拉后执行的回调, 就全部刷新
+      callback: function(data) {
+        requestHybrid({ action: 'hideRefresh' })
+        location.reload();  // 前端直接刷新，或者发起请求更新
+      }
+    }))
+  })()
+  function goToWeb() {
+    console.log(requestHybrid({
+      action: 'go', // action
+      params: {
+        to: location.origin + location.pathname + 'back.html', // 要前往的页面
+        type: 'web', // 新开 webview 跳转到前端页面
+        otherkey: '1', // 其他参数
+      }
+    }))
+  }
+  function goToNative() {
+    console.log(requestHybrid({
+      action: 'go', // action
+      params: {
+        to: 'test', // 要前往的页面
+        type: 'native', // 新开 webview 跳转到前端页面
+        otherkey: '1', // 其他参数
+      }
+    }))
+  }
   function getUserInfo() {
     console.log(requestHybrid({
       action: 'getUserInfo',
@@ -90,6 +215,47 @@
         if (res.result) {
           document.getElementById('getLocation').innerHTML = '纬度：' + res.data.lat + ', 经度：' + res.data.lon
         }
+      }
+    }))
+  }
+  function chooseImage() {
+    console.log(requestHybrid({
+      action: 'chooseImage',
+      callback: function(res) {
+        if (res.result) {
+          const html = res.data.localIds.map(function(item) {
+            return '<img src="' + item + '" width="30" height="auto" />'
+          }).join('')
+          document.getElementById('chooseImage').innerHTML = html
+        }
+      }
+    }))
+  }
+  function previewImage() {
+    console.log(requestHybrid({
+      action: 'previewImage', // action
+      params: {
+        current: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 当前显示图片的 http 链接
+        urls: [
+          'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',
+          'http://img.jkbsimg.com/up/pic/2017/01/03/-KXs4x-SFy.png',
+          'http://img.jkbsimg.com/up/pic/2017/01/03/-rHkR-bkIv.jpg'
+        ],  // 需要预览的图片 http 链接列表
+      }
+    }))
+  }
+  function share() {
+    console.log(requestHybrid({
+      action: 'share', // action
+      params: {
+        // 上面两个参数用于内部分享，或者分享打点
+        type: 'product', // 分享类型
+        id: '1',        // 分享东西的 ID
+
+        title: '阿娇',   // 标题
+        pic: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 图片
+        desc: '呵呵呵呵',   // 描述
+        url: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',  // 分享的地址
       }
     }))
   }
