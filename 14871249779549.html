@@ -1,0 +1,266 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  拍照或从手机相册中选图 - Hybrid 文档
+  
+  </title>
+ <meta name="description" content="">
+ <link href="atom.xml" rel="alternate" title="Hybrid 文档" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+    <script src="asset/highlightjs/highlight.pack.js"></script>
+    <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+<div id="header">
+    <h1><a href="index.html">Hybrid 文档</a></h1>
+</div>
+
+</nav>
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Hybrid 文档</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+      <li><a href="index.html">Home</a></li>
+      
+        <li class="divider"></li>
+        <li><label>实现和约定</label></li>
+
+          
+            <li><a title="Hybrid 调用约定" href="14871247114838.html">Hybrid 调用约定</a></li>
+          
+            <li><a title="实现方案" href="14871246273123.html">实现方案</a></li>
+          
+            <li><a title="回调函数返回约定" href="14871236662787.html">回调函数返回约定</a></li>
+          
+
+      
+        <li class="divider"></li>
+        <li><label>API</label></li>
+
+          
+            <li><a title="预览图片" href="14871263541121.html">预览图片</a></li>
+          
+            <li><a title="上传图片" href="14871259675370.html">上传图片</a></li>
+          
+            <li><a title="拍照或从手机相册中选图" href="14871249779549.html">拍照或从手机相册中选图</a></li>
+          
+            <li><a title="获取地理位置" href="14871244808753.html">获取地理位置</a></li>
+          
+            <li><a title="获取用户信息" href="14871240185648.html">获取用户信息</a></li>
+          
+            <li><a title="获取网络状态" href="14871235676924.html">获取网络状态</a></li>
+          
+
+      
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+        <section id="main-content" role="main" class="scroll-container">
+
+          <div class="row">
+            <div class="large-3 medium-3 columns">
+              <div class="hide-for-small">
+                <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+
+                    
+                      <li class="side-title"><span>实现和约定</span></li>
+                        
+                          <li><a title="Hybrid 调用约定" href="14871247114838.html">Hybrid 调用约定</a></li>
+                        
+                          <li><a title="实现方案" href="14871246273123.html">实现方案</a></li>
+                        
+                          <li><a title="回调函数返回约定" href="14871236662787.html">回调函数返回约定</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>API</span></li>
+                        
+                          <li><a title="预览图片" href="14871263541121.html">预览图片</a></li>
+                        
+                          <li><a title="上传图片" href="14871259675370.html">上传图片</a></li>
+                        
+                          <li><a title="拍照或从手机相册中选图" href="14871249779549.html">拍照或从手机相册中选图</a></li>
+                        
+                          <li><a title="获取地理位置" href="14871244808753.html">获取地理位置</a></li>
+                        
+                          <li><a title="获取用户信息" href="14871240185648.html">获取用户信息</a></li>
+                        
+                          <li><a title="获取网络状态" href="14871235676924.html">获取网络状态</a></li>
+                        
+
+                    
+                  </ul>
+                </nav>
+                </div>
+              </div>
+            </div>
+            <div class="large-9 medium-9 columns">
+
+ <div class="markdown-body">
+<h1>拍照或从手机相册中选图</h1>
+
+<pre><code class="language-javascript">requestHybrid({
+  action: &#39;chooseImage&#39;, // action
+  params: {
+    count: 1,                             // 默认 1
+    sizeType: [&#39;original&#39;, &#39;compressed&#39;], // 原图还是压缩图，默认二者都有,
+    sourceType: [&#39;album&#39;, &#39;camera&#39;],      // 相册还是相机，默认二者都有
+  },
+  callback: function(res) {
+    var localIds = res.data.localIds  // 返回选定照片的本地 ID 列表，localId 可以作为 img 标签的 src 属性显示图片
+  }
+})
+</code></pre>
+
+<h3 id="toc_0">参数</h3>
+
+<hr/>
+
+<p>action: <strong>chooseImage</strong><br/>
+params: </p>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>count</td>
+<td>1</td>
+<td>number</td>
+<td>选取的照片数量，默认为 1</td>
+</tr>
+<tr>
+<td>sizeType</td>
+<td>[&#39;original&#39;, &#39;compressed&#39;]</td>
+<td>array</td>
+<td>原图或压缩图，默认二者都有</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>[&#39;album&#39;, &#39;camera&#39;]</td>
+<td>array</td>
+<td>相册还是相机，默认二者都有</td>
+</tr>
+</tbody>
+</table>
+
+<hr/>
+
+<h3 id="toc_1">返回</h3>
+
+<pre><code class="language-javascript">{
+    result: true, // or false
+    data: {
+       localIds: [], // 返回选定照片的本地 ID 列表，localId 可以作为 img 标签的 src 属性显示图片
+       ...others // 其他图片详情信息，
+    },
+    message: &#39;false 提示文本，true 返回空&#39;
+}
+</code></pre>
+
+
+</div>
+
+<br /><br />
+<hr />
+
+<div class="row clearfix">
+  <div class="large-6 columns">
+	<div class="text-left" style="padding:15px 0px;">
+		
+	        <a href="14871244808753.html"  title="Previous Post: 获取地理位置">&laquo; 获取地理位置</a>
+	    
+	</div>
+  </div>
+  <div class="large-6 columns">
+	<div class="text-right" style="padding:15px 0px;">
+		
+	        <a href="14871259675370.html" 
+	        title="Next Post: 上传图片">上传图片 &raquo;</a>
+	    
+	</div>
+  </div>
+</div>
+
+<div class="row">
+<div style="padding:0px 0.93em;" class="share-comments">
+
+</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		var currentURL = '14871249779549.html';
+		$('#side-nav a').each(function(){
+			if($(this).attr('href') == currentURL){
+				$(this).parent().addClass('active');
+			}
+		});
+	});
+</script>  
+</div></div>
+
+
+<div class="page-bottom">
+  <div class="row">
+  <hr />
+  <div class="small-9 columns">
+  <p class="copyright">Copyright &copy; 2017
+Powered by <a target="_blank" href="http://github.com/maskzh">maskzh</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+  <div class="small-3 columns">
+  <p class="copyright text-right"><a href="#header">TOP</a></p>
+  </div>
+   
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+    
+    
+    <script src="asset/js/foundation.min.js"></script>
+    <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+    <script>
+      $(document).foundation();
+
+     
+    </script>
+    
+
+
+  </body>
+</html>

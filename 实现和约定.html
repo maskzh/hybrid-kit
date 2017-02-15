@@ -1,0 +1,205 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  实现和约定 - Hybrid 文档
+  
+  </title>
+ <meta name="description" content="">
+ <link href="atom.xml" rel="alternate" title="Hybrid 文档" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+    <script src="asset/highlightjs/highlight.pack.js"></script>
+    <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+<div id="header">
+    <h1><a href="index.html">Hybrid 文档</a></h1>
+</div>
+
+</nav>
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Hybrid 文档</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+      <li><a href="index.html">Home</a></li>
+      
+        <li class="divider"></li>
+        <li><label>实现和约定</label></li>
+
+          
+            <li><a title="Hybrid 调用约定" href="14871247114838.html">Hybrid 调用约定</a></li>
+          
+            <li><a title="实现方案" href="14871246273123.html">实现方案</a></li>
+          
+            <li><a title="回调函数返回约定" href="14871236662787.html">回调函数返回约定</a></li>
+          
+
+      
+        <li class="divider"></li>
+        <li><label>API</label></li>
+
+          
+            <li><a title="预览图片" href="14871263541121.html">预览图片</a></li>
+          
+            <li><a title="上传图片" href="14871259675370.html">上传图片</a></li>
+          
+            <li><a title="拍照或从手机相册中选图" href="14871249779549.html">拍照或从手机相册中选图</a></li>
+          
+            <li><a title="获取地理位置" href="14871244808753.html">获取地理位置</a></li>
+          
+            <li><a title="获取用户信息" href="14871240185648.html">获取用户信息</a></li>
+          
+            <li><a title="获取网络状态" href="14871235676924.html">获取网络状态</a></li>
+          
+
+      
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+        <section id="main-content" role="main" class="scroll-container">
+
+          <div class="row">
+            <div class="large-3 medium-3 columns">
+              <div class="hide-for-small">
+                <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+
+                    
+                      <li class="side-title"><span>实现和约定</span></li>
+                        
+                          <li><a title="Hybrid 调用约定" href="14871247114838.html">Hybrid 调用约定</a></li>
+                        
+                          <li><a title="实现方案" href="14871246273123.html">实现方案</a></li>
+                        
+                          <li><a title="回调函数返回约定" href="14871236662787.html">回调函数返回约定</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>API</span></li>
+                        
+                          <li><a title="预览图片" href="14871263541121.html">预览图片</a></li>
+                        
+                          <li><a title="上传图片" href="14871259675370.html">上传图片</a></li>
+                        
+                          <li><a title="拍照或从手机相册中选图" href="14871249779549.html">拍照或从手机相册中选图</a></li>
+                        
+                          <li><a title="获取地理位置" href="14871244808753.html">获取地理位置</a></li>
+                        
+                          <li><a title="获取用户信息" href="14871240185648.html">获取用户信息</a></li>
+                        
+                          <li><a title="获取网络状态" href="14871235676924.html">获取网络状态</a></li>
+                        
+
+                    
+                  </ul>
+                </nav>
+                </div>
+              </div>
+            </div>
+            <div class="large-9 medium-9 columns">
+
+ 
+
+
+	
+		<div class="markdown-body">
+		<h1>Hybrid 调用约定</h1>
+
+		<h4 id="toc_0">JS 调用</h4>
+
+<pre><code class="language-javascript">requestHybrid({
+  // 请求对象
+  action: &#39;hybridapi&#39;,
+  // 请求参数，传递给 Native 使用
+  params: {},
+  // Native处理成功后回调前端的方法
+  callback: function (data) {}
+})
+</code></pre>
+
+<h4 id="toc_1">Native 端接收</h4>
+
+<pre><code>hybridschema://hybridapi?params=%7B%22data1%22%3A1%2C%22data2%22%3A2%7D&amp;callback=hybrid_1446276509894
+</code></pre>
+
+<p>字段解释：</p>
+
+<ul>
+<li>hybridschema 为约定 APP 的 schema，例：jkbs</li>
+<li>hybridapi 为发起的 action，由前端和 Native 端定义，例：forward 跳转</li>
+<li>params 为传递的参数，params 的值经过 JSON.stringify 和 encodeURLComponent，例：{ a: 1 } =&gt; %7B%22a%22%3A1%7D</li>
+<li>callback 为定义在全局的临时函数的名称，可由 Native 调用执行。</li>
+</ul>
+
+<p><strong>注意</strong>: 由于 Schema URL 有 2k 的限制，所以 params 会尽可能仅传有用的值，无法传递大量数据。</p>
+
+
+		</div>
+	
+
+ 
+	
+
+ 
+	
+
+  
+  
+</div></div>
+
+
+<div class="page-bottom">
+  <div class="row">
+  <hr />
+  <div class="small-9 columns">
+  <p class="copyright">Copyright &copy; 2017
+Powered by <a target="_blank" href="http://github.com/maskzh">maskzh</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+  <div class="small-3 columns">
+  <p class="copyright text-right"><a href="#header">TOP</a></p>
+  </div>
+   
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+    
+    
+    <script src="asset/js/foundation.min.js"></script>
+    <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+    <script>
+      $(document).foundation();
+
+     
+    </script>
+    
+
+
+  </body>
+</html>
