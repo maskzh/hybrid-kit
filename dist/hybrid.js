@@ -182,17 +182,29 @@ function getHybridUrl(schema, options) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__requestHybrid__ = __webpack_require__(4);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "getHybridInfo", function() { return __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "requestHybrid", function() { return __WEBPACK_IMPORTED_MODULE_1__requestHybrid__["a"]; });
+
+
+
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getHybridUrl__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__ = __webpack_require__(0);
-/* harmony export (immutable) */ __webpack_exports__["requestHybrid"] = requestHybrid;
+/* harmony export (immutable) */ __webpack_exports__["a"] = requestHybrid;
 
 
 
 
 window.Hybrid = window.Hybrid || {}
-
-exports.getHybridInfo = __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */]
-exports.getHybridUrl = __WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */]
 
 function requestHybrid(options) {
   if(!options.action) throw new Error('action must set!')
