@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  预览图片 - Hybrid 文档
+  分享 - Hybrid 文档
   
   </title>
  <meta name="description" content="">
@@ -134,13 +134,19 @@
             <div class="large-9 medium-9 columns">
 
  <div class="markdown-body">
-<h1>预览图片</h1>
+<h1>分享</h1>
 
 <pre><code class="language-javascript">requestHybrid({
-  action: &#39;previewImage&#39;, // action
+  action: &#39;share&#39;, // action
   params: {
-    current: &#39;&#39;, // 当前显示图片的http链接
-    urls: [],  // 需要预览的图片 http 链接列表
+    // 上面两个参数用于内部分享，或者分享打点
+    type: &#39;product&#39;, // 分享类型
+    id: &#39;11&#39;,        // 分享东西的 ID
+
+    title: &#39;阿娇&#39;,   // 标题
+    pic: &#39;http://img.jkbsimg.com/fefe&#39;, // 图片
+    desc: &#39;呵呵呵呵&#39;,   // 描述
+    url: &#39;url&#39;,  // 分享的地址
   }
 })
 </code></pre>
@@ -149,7 +155,7 @@
 
 <hr/>
 
-<p>action: <strong>previewImage</strong><br/>
+<p>action: <strong>share</strong><br/>
 params: </p>
 
 <table>
@@ -164,16 +170,40 @@ params: </p>
 
 <tbody>
 <tr>
-<td>current</td>
-<td><a href="http://img.jkbsimg.com/up/fefe.png">http://img.jkbsimg.com/up/fefe.png</a></td>
+<td>title</td>
+<td>标题</td>
 <td>string</td>
-<td>当前显示图片的http链接</td>
+<td>分享所需标题</td>
 </tr>
 <tr>
-<td>urls</td>
-<td>[imgurl, imgurl, imgurl]</td>
+<td>pic</td>
+<td><a href="http://img.jkbsimg.com/fefe.png">http://img.jkbsimg.com/fefe.png</a></td>
+<td>string</td>
+<td>分享所需图片</td>
+</tr>
+<tr>
+<td>desc</td>
+<td>描述</td>
 <td>array</td>
-<td>需要预览的图片 http 链接列表</td>
+<td>分享所需描述</td>
+</tr>
+<tr>
+<td>url</td>
+<td>http://shareurl</td>
+<td>string</td>
+<td>分享的链接</td>
+</tr>
+<tr>
+<td>type</td>
+<td>enum(&#39;product&#39;, &#39;news&#39;,  ...)</td>
+<td>string</td>
+<td>分享的类型</td>
+</tr>
+<tr>
+<td>id</td>
+<td>具体类型的 ID</td>
+<td>string</td>
+<td>-</td>
 </tr>
 </tbody>
 </table>
@@ -188,15 +218,15 @@ params: </p>
   <div class="large-6 columns">
 	<div class="text-left" style="padding:15px 0px;">
 		
-	        <a href="14871259675370.html"  title="Previous Post: 上传图片">&laquo; 上传图片</a>
+	        <a href="14871263541121.html"  title="Previous Post: 预览图片">&laquo; 预览图片</a>
 	    
 	</div>
   </div>
   <div class="large-6 columns">
 	<div class="text-right" style="padding:15px 0px;">
 		
-	        <a href="14871284284820.html" 
-	        title="Next Post: 分享">分享 &raquo;</a>
+	        <a href="14871306005614.html" 
+	        title="Next Post: 下拉刷新">下拉刷新 &raquo;</a>
 	    
 	</div>
   </div>
@@ -209,7 +239,7 @@ params: </p>
 </div>
 <script type="text/javascript">
 	$(function(){
-		var currentURL = '14871263541121.html';
+		var currentURL = '14871284284820.html';
 		$('#side-nav a').each(function(){
 			if($(this).attr('href') == currentURL){
 				$(this).parent().addClass('active');

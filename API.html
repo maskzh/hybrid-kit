@@ -59,6 +59,12 @@
         <li><label>API</label></li>
 
           
+            <li><a title="跳转" href="14871314960270.html">跳转</a></li>
+          
+            <li><a title="下拉刷新" href="14871306005614.html">下拉刷新</a></li>
+          
+            <li><a title="分享" href="14871284284820.html">分享</a></li>
+          
             <li><a title="预览图片" href="14871263541121.html">预览图片</a></li>
           
             <li><a title="上传图片" href="14871259675370.html">上传图片</a></li>
@@ -100,6 +106,12 @@
                     
                       <li class="side-title"><span>API</span></li>
                         
+                          <li><a title="跳转" href="14871314960270.html">跳转</a></li>
+                        
+                          <li><a title="下拉刷新" href="14871306005614.html">下拉刷新</a></li>
+                        
+                          <li><a title="分享" href="14871284284820.html">分享</a></li>
+                        
                           <li><a title="预览图片" href="14871263541121.html">预览图片</a></li>
                         
                           <li><a title="上传图片" href="14871259675370.html">上传图片</a></li>
@@ -126,23 +138,54 @@
 
 	
 		<div class="markdown-body">
-		<h1>预览图片</h1>
+		<h1>跳转</h1>
 
-		<pre><code class="language-javascript">requestHybrid({
-  action: &#39;previewImage&#39;, // action
-  params: {
-    current: &#39;&#39;, // 当前显示图片的http链接
-    urls: [],  // 需要预览的图片 http 链接列表
-  }
+		<p>跳转场景描述：</p>
+
+<ul>
+<li>前端页面内跳转，与 Native 无关</li>
+<li>前端页面跳转到 Native 界面</li>
+<li>前端页面新开 Webview 跳转到前端页面，实现页面动画切换，并且可以暂存页面内容，回退页面无需重新加载。</li>
+</ul>
+
+<h4 id="toc_0">go</h4>
+
+<pre><code class="language-javascript">requestHybrid({
+ action: &#39;go&#39;, // action
+ params: {
+   to: &#39;http://example.com/b.html&#39;, // 要前往的页面
+   type: &#39;web&#39;, // 新开 webview 跳转到前端页面
+   otherkey: &#39;1&#39;, // 其他参数
+ }
+})
+requestHybrid({
+ action: &#39;go&#39;, // action
+ params: {
+   to: &#39;home&#39;, // 要前往的页面
+   type: &#39;native&#39;, // 跳转原生页面
+   otherkey: &#39;1&#39;, // 其他参数
+ }
 })
 </code></pre>
 
-<h3 id="toc_0">参数</h3>
+<h4 id="toc_1">replace</h4>
+
+<pre><code class="language-javascript">requestHybrid({
+ action: &#39;replace&#39;, // action
+ params: {
+   to: &#39;home&#39;, // 要前往的页面
+   type: &#39;native&#39;, // 跳转方式
+   otherkey: &#39;1&#39;, // 其他参数
+ }
+})
+</code></pre>
+
+<h5 id="toc_2">参数</h5>
 
 <hr/>
 
-<p>action: <strong>previewImage</strong><br/>
-params: </p>
+<p>action: <strong>go</strong> or <strong>replace</strong>，replace 时跳转到下一个页面时，将上一个页面销毁<br/>
+params:</p>
 
 <table>
 <thead>
@@ -156,22 +199,47 @@ params: </p>
 
 <tbody>
 <tr>
-<td>current</td>
-<td><a href="http://img.jkbsimg.com/up/fefe.png">http://img.jkbsimg.com/up/fefe.png</a></td>
+<td>type</td>
+<td>enum(&#39;native&#39;, &#39;web&#39;)</td>
 <td>string</td>
-<td>当前显示图片的http链接</td>
+<td>跳转方式</td>
 </tr>
 <tr>
-<td>urls</td>
-<td>[imgurl, imgurl, imgurl]</td>
-<td>array</td>
-<td>需要预览的图片 http 链接列表</td>
+<td>to</td>
+<td>http://url or home</td>
+<td>string</td>
+<td>若跳转方式为 native，则为 Native Scene 的 ID，若为 web，则为网址</td>
 </tr>
 </tbody>
 </table>
 
+<hr/>
+
+<h4 id="toc_3">back</h4>
+
+<pre><code class="language-javascript">requestHybrid({
+ action: &#39;back&#39;
+})
+</code></pre>
+
+<h5 id="toc_4">参数</h5>
+
+<p>action: <strong>back</strong><br/>
+params: &#39;no&#39;</p>
+
+<p>注意 back 的实现，首先在 webview 中检查 history 的记录，如果大于 1 则后退，否则退回上一层。</p>
+
 
 		</div>
+	
+
+ 
+	
+
+ 
+	
+
+ 
 	
 
  
