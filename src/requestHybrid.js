@@ -2,8 +2,6 @@ import getHybridInfo from './getHybridInfo'
 import getHybridUrl from './getHybridUrl'
 import bridgePostMsg from './bridgePostMsg'
 
-window.Hybrid = window.Hybrid || {}
-
 export default function requestHybrid(options) {
   if(!options.action) throw new Error('action must set!')
 
@@ -17,9 +15,9 @@ export default function requestHybrid(options) {
   if (options.callback) {
     const cb = options.callback
     options.callback = cbName
-    window.Hybrid[cbName] = function(data) {
+    window[cbName] = function(data) {
       cb(data)
-      delete window.Hybrid[cbName]
+      delete window[cbName]
     }
   }
 
