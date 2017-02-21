@@ -16,7 +16,7 @@ export default function requestHybrid(options) {
     const cb = options.callback
     options.callback = cbName
     window[cbName] = function(data) {
-      cb(data)
+      cb(JSON.parse(data))
       delete window[cbName]
     }
   }
