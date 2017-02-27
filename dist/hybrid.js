@@ -78,10 +78,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = getHybridInfo;
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getHybridInfo;
 /**
  * 获取版本信息
  * 约定 APP 的 navigator.userAgent 版本包含版本信息：ios/schema/xx.xx.xx
@@ -90,109 +95,134 @@ return /******/ (function(modules) { // webpackBootstrap
  */
 
 function getHybridInfo() {
-  const info = {}
+  var info = {};
 
-  let tmp = navigator.userAgent.match(/\w+\/\w+\/\d+\.\d+\.\d+/g)
-  tmp = tmp && tmp.pop()
+  var tmp = navigator.userAgent.match(/\w+\/\w+\/\d+\.\d+\.\d+/g);
+  tmp = tmp && tmp.pop();
 
   if (tmp) {
-    tmp = tmp.split('/')
+    tmp = tmp.split('/');
     if (tmp && tmp.length === 3) {
-      info.platform = tmp[0]
-      info.schema = tmp[1]
-      info.version = tmp[1]
+      info.platform = tmp[0];
+      info.schema = tmp[1];
+      info.version = tmp[1];
     }
   }
 
-  return info
+  return info;
 }
-
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getHybridUrl__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__ = __webpack_require__(2);
-/* harmony export (immutable) */ __webpack_exports__["a"] = requestHybrid;
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = requestHybrid;
 
+var _getHybridInfo2 = __webpack_require__(0);
+
+var _getHybridInfo3 = _interopRequireDefault(_getHybridInfo2);
+
+var _getHybridUrl = __webpack_require__(3);
+
+var _getHybridUrl2 = _interopRequireDefault(_getHybridUrl);
+
+var _bridgePostMsg = __webpack_require__(2);
+
+var _bridgePostMsg2 = _interopRequireDefault(_bridgePostMsg);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function requestHybrid(options) {
-  if(!options.action) throw new Error('action must set!')
+  if (!options.action) throw new Error('action must set!');
 
   // 获取 Hybrid 信息
-  const { schema = 'hybrid' } = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a" /* default */])()
+
+  var _getHybridInfo = (0, _getHybridInfo3.default)(),
+      _getHybridInfo$schema = _getHybridInfo.schema,
+      schema = _getHybridInfo$schema === undefined ? 'hybrid' : _getHybridInfo$schema;
 
   // 生成唯一执行函数，执行后销毁
-  const cbName = `${schema}_${Date.now()}`
+
+
+  var cbName = schema + '_' + Date.now();
 
   // 处理有回调的情况
   if (options.callback) {
-    const cb = options.callback
-    options.callback = cbName
-    window[cbName] = function(data) {
-      try {
-        cb(JSON.parse(data))
-        delete window[cbName]
-      } catch(err) {
-        console.error(err)
-      }
-    }
+    (function () {
+      var cb = options.callback;
+      options.callback = cbName;
+      window[cbName] = function (data) {
+        try {
+          cb(JSON.parse(data));
+          delete window[cbName];
+        } catch (err) {
+          console.error(err);
+        }
+      };
+    })();
   }
 
-  const url = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__getHybridUrl__["a" /* default */])(schema, options)
+  var url = (0, _getHybridUrl2.default)(schema, options);
 
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__bridgePostMsg__["a" /* default */])(url)
+  (0, _bridgePostMsg2.default)(url);
 
-  return url
+  return url;
 }
-
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * 适配不同平台，发起 schema URL
- * @param  {String}   url      发起的 Schema URL
- * @return {undefined}         无返回
- */
 
-/* harmony default export */ __webpack_exports__["a"] = function(url) {
-  if (!url) return
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (url) {
+  if (!url) return;
 
   // 若为 iOS，直接打开地址
   if (!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-    window.location = url
-    return
+    window.location = url;
+    return;
   }
 
   // 若为 Android
-  const body = document.body
-  let ifr = document.createElement('iframe')
-  ifr.style.display = 'none'
-  ifr.src = url
+  var body = document.body;
+  var ifr = document.createElement('iframe');
+  ifr.style.display = 'none';
+  ifr.src = url;
 
-  body.appendChild(ifr)
+  body.appendChild(ifr);
 
-  setTimeout(() => {
-    body.removeChild(ifr)
-    ifr = null
-  }, 1000)
+  setTimeout(function () {
+    body.removeChild(ifr);
+    ifr = null;
+  }, 1000);
 };
-
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = getHybridUrl;
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = getHybridUrl;
 /**
  * 获取发起调用 Hybrid 的 Url
  * @method getHybridUrl
@@ -203,37 +233,44 @@ function requestHybrid(options) {
 
 function getHybridUrl(schema, options) {
   // 添加了时间戳，防止 URL 不起效
-  let url = `${schema}://${options.action}?t=${Date.now()}`
+  var url = schema + '://' + options.action + '?t=' + Date.now();
 
   if (options.callback) {
-    url += `&callback=${options.callback}`
+    url += '&callback=' + options.callback;
   }
 
   if (options.params) {
-    const paramStr = typeof options.params === 'object'
-      ? JSON.stringify(options.params) : options.params
-    url += `&params=${encodeURIComponent(paramStr)}`
+    var paramStr = _typeof(options.params) === 'object' ? JSON.stringify(options.params) : options.params;
+    url += '&params=' + encodeURIComponent(paramStr);
   }
 
-  return url
+  return url;
 }
-
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__requestHybrid__ = __webpack_require__(1);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "getHybridInfo", function() { return __WEBPACK_IMPORTED_MODULE_0__getHybridInfo__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "requestHybrid", function() { return __WEBPACK_IMPORTED_MODULE_1__requestHybrid__["a"]; });
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.requestHybrid = exports.getHybridInfo = undefined;
 
+var _getHybridInfo = __webpack_require__(0);
 
+var _getHybridInfo2 = _interopRequireDefault(_getHybridInfo);
 
+var _requestHybrid = __webpack_require__(1);
+
+var _requestHybrid2 = _interopRequireDefault(_requestHybrid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.getHybridInfo = _getHybridInfo2.default;
+exports.requestHybrid = _requestHybrid2.default;
 
 /***/ })
 /******/ ]);
