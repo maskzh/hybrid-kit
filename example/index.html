@@ -157,16 +157,16 @@
 <script src="./highlight/highlight.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
-  (function registerRefresh() {
-    console.log(requestHybrid({
-      action: 'registerRefresh',
-      // 下拉后执行的回调, 就全部刷新
-      callback: function(data) {
-        requestHybrid({ action: 'hideRefresh' })
-        location.reload();  // 前端直接刷新，或者发起请求更新
-      }
-    }))
-  })()
+  // (function registerRefresh() {
+  //   console.log(requestHybrid({
+  //     action: 'registerRefresh',
+  //     // 下拉后执行的回调, 就全部刷新
+  //     callback: function(data) {
+  //       requestHybrid({ action: 'hideRefresh' })
+  //       location.reload();  // 前端直接刷新，或者发起请求更新
+  //     }
+  //   }))
+  // })()
   function goToWeb() {
     console.log(requestHybrid({
       action: 'go', // action
