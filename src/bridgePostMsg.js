@@ -9,7 +9,7 @@ export default function(url) {
 
   // 若为 iOS，直接打开地址
   if (!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-    window.location = url
+    setTimeout(() => { window.location = url })
     return
   }
 
