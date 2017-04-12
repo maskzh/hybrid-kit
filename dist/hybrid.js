@@ -190,10 +190,10 @@ exports.default = function (url) {
   if (!url) return;
 
   // 若为 iOS，直接打开地址
-  if (!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-    window.location = url;
-    return;
-  }
+  // if (!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+  //   setTimeout(() => { window.location = url })
+  //   return
+  // }
 
   // 若为 Android
   var body = document.body;
