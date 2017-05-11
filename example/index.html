@@ -153,6 +153,62 @@
 </pre>
 <div><a class="button" onclick="share()">分享</a></div>
 
+<h3>设置标题栏</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'updateHeader',
+  params: {
+    left: [{
+      // native 提供常用图标 icon 映射，也可以直接传 http://img.作为图标
+      icon: 'back',
+      callback: function () { } // 点击回调
+    }],
+    right: [{
+      icon: 'search',
+      callback: function () { }
+    }, {
+      icon: 'http://img', //自定义图标
+      callback: function () { }
+    }],
+    title: 'title',
+    subTitle: 'subtitle', // 显示主标题，子标题的场景
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="updateHeader()">设置标题栏</a></div>
+
+<h3>设置标题</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'setHeaderTitle',
+  params: '万家康乐商城'
+})
+</code>
+</pre>
+<div><a class="button" onclick="setHeaderTitle()">设置标题</a></div>
+
+
+
+<h3>打开取值页面</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'resultGo',
+  params: {
+    to: 'http://example.com/b.html', // 要前往的页面
+    type: 'web', // 新开 webview 跳转到 web 页面, 这里可能是 web 的取值页面，也可以是 native 的
+  },
+  callback: function(res) {
+    if (res.result) {
+      var item = res.data
+    }
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="resultGo()">打开取值页面</a></div>
+<div class="container" id="resultGo"></div>
+
 <link rel="stylesheet" href="./highlight/github-gist.css">
 <script src="./highlight/highlight.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
@@ -244,18 +300,44 @@
       }
     }))
   }
-  function share() {
+  function updateHeader() {
     console.log(requestHybrid({
-      action: 'share', // action
+      action: 'updateHeader',
       params: {
-        // 上面两个参数用于内部分享，或者分享打点
-        type: 'product', // 分享类型
-        id: '1',        // 分享东西的 ID
-
-        title: '阿娇',   // 标题
-        pic: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 图片
-        desc: '呵呵呵呵',   // 描述
-        url: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',  // 分享的地址
+        left: [{
+          // native 提供常用图标 icon 映射，也可以直接传 http://img.作为图标
+          icon: 'back',
+          callback: function () { } // 点击回调
+        }],
+        right: [{
+          icon: 'search',
+          callback: function () { }
+        }, {
+          icon: 'http://img', //自定义图标
+          callback: function () { }
+        }],
+        title: 'title',
+        subTitle: 'subtitle', // 显示主标题，子标题的场景
+      }
+    }))
+  }
+  function setHeaderTitle() {
+    console.log(requestHybrid({
+      action: 'setHeaderTitle',
+      params: '万家康乐商城'
+    }))
+  }
+  function resultGo() {
+    console.log(requestHybrid({
+      action: 'resultGo',
+      params: {
+        to: location.origin + location.pathname + 'back.html', // 要前往的页面
+        type: 'web', // 新开 webview 跳转到 web 页面, 这里可能是 web 的取值页面，也可以是 native 的
+      },
+      callback: function(res) {
+        if (res.result) {
+          document.getElementById('resultGo').innerHTML = JSON.stringify(res.data)
+        }
       }
     }))
   }

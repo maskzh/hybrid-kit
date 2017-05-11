@@ -20,6 +20,16 @@
 </pre>
 <div><a class="button" onclick="back()">返回</a></div>
 
+<h4>点击传递传递值并返回取值页面</h4>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'resultGoBack',
+  params: { name: '123', mobile: '18768178036' }, // web 传递的值
+})
+</code>
+</pre>
+<div><a class="button" onclick="resultGoBack()">传递值并返回取值页面</a></div>
+
 <link rel="stylesheet" href="./highlight/github-gist.css">
 <script src="./highlight/highlight.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
@@ -27,6 +37,12 @@
   function back() {
     console.log(requestHybrid({
       action: 'back'
+    }))
+  }
+  function resultGoBack() {
+    console.log(requestHybrid({
+      action: 'resultGoBack',
+      params: { name: '123', mobile: '18768178036' }, // web 传递的值
     }))
   }
 </script>
