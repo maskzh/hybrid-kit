@@ -325,14 +325,20 @@
         left: [{
           // native 提供常用图标 icon 映射，也可以直接传 http://img.作为图标
           icon: 'back',
-          callback: function () { } // 点击回调
+          callback: getHybridCallback(getHybridInfo().schema, function() {
+            requestHybrid({ action: 'back' })
+          }) // 点击回调
         }],
         right: [{
           icon: 'search',
-          callback: function () { }
+          callback: getHybridCallback(getHybridInfo().schema, function() {
+            alert('点击 search 图标回掉')
+          }) // 点击回调
         }, {
           icon: 'http://img', //自定义图标
-          callback: function () { }
+          callback: getHybridCallback(getHybridInfo().schema, function() {
+            alert('点击 自定义图标 回掉')
+          }) // 点击回调
         }],
         title: 'title',
         subTitle: 'subtitle', // 显示主标题，子标题的场景
