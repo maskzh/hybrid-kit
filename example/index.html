@@ -99,30 +99,30 @@
 <div><a class="button" onclick="getLocation()">获取地理位置</a></div>
 <div class="container" id="getLocation"></div>
 
-<h3>拍照或从手机相册中选图</h3>
+<h3>上传图片</h3>
 <pre>
 <code class="javascript">requestHybrid({
-  action: 'chooseImage', // action
+  action: 'uploadImage', // action
   params: {
     count: 1,                             // 默认 1
     sizeType: ['original', 'compressed'], // 原图还是压缩图，默认二者都有,
     sourceType: ['album', 'camera'],      // 相册还是相机，默认二者都有
   },
   callback: function(res) {
-    var localIds = res.data.localIds  // 返回选定照片的本地 ID 列表，localId 可以作为 img 标签的 src 属性显示图片
+    var data = res.data  // 返回上传图片的数组
   }
 })
 </code>
 </pre>
-<div><a class="button" onclick="chooseImage()">拍照或从手机相册中选图</a></div>
-<div class="container" id="chooseImage"></div>
+<div><a class="button" onclick="uploadImage()">上传图片</a></div>
+<div class="container" id="uploadImage"></div>
 
 <h3>预览图片</h3>
 <pre>
 <code class="javascript">requestHybrid({
   action: 'previewImage', // action
   params: {
-    current: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 当前显示图片的 http 链接
+    current: 1, // 当前显示图片的下标
     urls: [
       'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',
       'http://img.jkbsimg.com/up/pic/2017/01/03/-KXs4x-SFy.png',
@@ -274,15 +274,17 @@
       }
     }))
   }
-  function chooseImage() {
+  function uploadImage() {
     console.log(requestHybrid({
-      action: 'chooseImage',
+      action: 'uploadImage',
+      params: {
+        count: 1,                             // 默认 1
+        sizeType: ['original', 'compressed'], // 原图还是压缩图，默认二者都有,
+        sourceType: ['album', 'camera'],      // 相册还是相机，默认二者都有
+      },
       callback: function(res) {
         if (res.result) {
-          const html = res.data.localIds.map(function(item) {
-            return '<img src="' + item + '" width="30" height="auto" />'
-          }).join('')
-          document.getElementById('chooseImage').innerHTML = html
+          document.getElementById('uploadImage').innerHTML = JSON.stringify(res.data)
         }
       }
     }))
@@ -291,7 +293,7 @@
     console.log(requestHybrid({
       action: 'previewImage', // action
       params: {
-        current: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 当前显示图片的 http 链接
+        current: 1, // 当前显示图片的下标
         urls: [
           'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',
           'http://img.jkbsimg.com/up/pic/2017/01/03/-KXs4x-SFy.png',
@@ -300,6 +302,22 @@
       }
     }))
   }
+  function share() {
+    console.log(requestHybrid({
+      action: 'share', // action
+      params: {
+        // 上面两个参数用于内部分享，或者分享打点
+        type: 'product', // 分享类型
+        id: '1',        // 分享东西的 ID
+
+        title: '阿娇',   // 标题
+        pic: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png', // 图片
+        desc: '呵呵呵呵',   // 描述
+        url: 'http://img.jkbsimg.com/up/pic/2017/01/03/-El8r1Je_g.png',  // 分享的地址
+      }
+    }))
+  }
+
   function updateHeader() {
     console.log(requestHybrid({
       action: 'updateHeader',
