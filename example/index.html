@@ -209,6 +209,21 @@
 <div><a class="button" onclick="resultGo()">打开取值页面</a></div>
 <div class="container" id="resultGo"></div>
 
+<h3>扫一扫</h3>
+<pre>
+<code class="javascript">requestHybrid({
+  action: 'scan',
+  callback: function(res) {
+    if (res.result) {
+      var data = res.data
+    }
+  }
+})
+</code>
+</pre>
+<div><a class="button" onclick="scan()">扫一扫</a></div>
+<div class="container" id="scan"></div>
+
 <link rel="stylesheet" href="./highlight/github-gist.css">
 <script src="./highlight/highlight.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
@@ -361,6 +376,16 @@
       callback: function(res) {
         if (res.result) {
           document.getElementById('resultGo').innerHTML = JSON.stringify(res.data)
+        }
+      }
+    }))
+  }
+  function scan() {
+    console.log(requestHybrid({
+      action: 'scan',
+      callback: function(res) {
+        if (res.result) {
+          document.getElementById('scan').innerHTML = JSON.stringify(res.data)
         }
       }
     }))
