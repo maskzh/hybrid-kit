@@ -86,6 +86,42 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = getHybridCallback;
+/**
+ * 获取发起调用 Hybrid 的 callback
+ * @method getHybridCallback
+ * @param  {Function}     cb 回调函数
+ * @return {String}          函数名称
+ */
+
+function getHybridCallback(cb) {
+  if (!cb || typeof cb !== 'function') throw new Error('cb must set!');
+
+  // 生成唯一执行函数，执行后销毁
+  var cbName = 'callback_' + Date.now();
+
+  window[cbName] = function (data) {
+    try {
+      cb(JSON.parse(data));
+      delete window[cbName];
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return cbName;
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = getHybridInfo;
 /**
  * 获取版本信息
@@ -113,7 +149,7 @@ function getHybridInfo() {
 }
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -124,19 +160,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = requestHybrid;
 
-var _getHybridInfo2 = __webpack_require__(0);
-
-var _getHybridInfo3 = _interopRequireDefault(_getHybridInfo2);
-
 var _getHybridUrl = __webpack_require__(4);
 
 var _getHybridUrl2 = _interopRequireDefault(_getHybridUrl);
 
-var _getHybridCallback = __webpack_require__(3);
+var _getHybridInfo = __webpack_require__(1);
+
+var _getHybridInfo2 = _interopRequireDefault(_getHybridInfo);
+
+var _getHybridCallback = __webpack_require__(0);
 
 var _getHybridCallback2 = _interopRequireDefault(_getHybridCallback);
 
-var _bridgePostMsg = __webpack_require__(2);
+var _bridgePostMsg = __webpack_require__(3);
 
 var _bridgePostMsg2 = _interopRequireDefault(_bridgePostMsg);
 
@@ -145,18 +181,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function requestHybrid(options) {
   if (!options.action) throw new Error('action must set!');
 
-  // 获取 Hybrid 信息
-
-  var _getHybridInfo = (0, _getHybridInfo3.default)(),
-      _getHybridInfo$schema = _getHybridInfo.schema,
-      schema = _getHybridInfo$schema === undefined ? 'hybrid' : _getHybridInfo$schema;
+  var schema = options.schema || (0, _getHybridInfo2.default)().schema || 'hybrid';
 
   // 处理有回调的情况
-
-
   if (options.callback) {
     var cb = options.callback;
-    options.callback = (0, _getHybridCallback2.default)(schema, cb);
+    options.callback = (0, _getHybridCallback2.default)(cb);
   }
 
   var url = (0, _getHybridUrl2.default)(schema, options);
@@ -167,7 +197,7 @@ function requestHybrid(options) {
 }
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -199,43 +229,6 @@ exports.default = function (url) {
     ifr = null;
   }, 1000);
 };
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = getHybridCallback;
-/**
- * 获取发起调用 Hybrid 的 callback
- * @method getHybridCallback
- * @param  {String}     schema  APP 对应的 schema
- * @param  {Object}     options 配置参数
- * @return {String}             转化后地址
- */
-
-function getHybridCallback(schema, cb) {
-  if (!cb || typeof cb !== 'function') throw new Error('cb must set!');
-
-  // 生成唯一执行函数，执行后销毁
-  var cbName = schema + '_' + Date.now();
-
-  window[cbName] = function (data) {
-    try {
-      cb(JSON.parse(data));
-      delete window[cbName];
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  return cbName;
-}
 
 /***/ }),
 /* 4 */
@@ -287,15 +280,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.requestHybrid = exports.getHybridCallback = exports.getHybridInfo = undefined;
 
-var _getHybridInfo = __webpack_require__(0);
+var _getHybridInfo = __webpack_require__(1);
 
 var _getHybridInfo2 = _interopRequireDefault(_getHybridInfo);
 
-var _getHybridCallback = __webpack_require__(3);
+var _getHybridCallback = __webpack_require__(0);
 
 var _getHybridCallback2 = _interopRequireDefault(_getHybridCallback);
 
-var _requestHybrid = __webpack_require__(1);
+var _requestHybrid = __webpack_require__(2);
 
 var _requestHybrid2 = _interopRequireDefault(_requestHybrid);
 

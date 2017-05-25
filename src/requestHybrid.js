@@ -1,18 +1,17 @@
-import getHybridInfo from './getHybridInfo'
 import getHybridUrl from './getHybridUrl'
+import getHybridInfo from './getHybridInfo'
 import getHybridCallback from './getHybridCallback'
 import bridgePostMsg from './bridgePostMsg'
 
 export default function requestHybrid(options) {
   if(!options.action) throw new Error('action must set!')
 
-  // 获取 Hybrid 信息
-  const { schema = 'hybrid' } = getHybridInfo()
+  const schema = options.schema || getHybridInfo().schema || 'hybrid'
 
   // 处理有回调的情况
   if (options.callback) {
     const cb = options.callback
-    options.callback = getHybridCallback(schema, cb)
+    options.callback = getHybridCallback(cb)
   }
 
   const url = getHybridUrl(schema, options)
